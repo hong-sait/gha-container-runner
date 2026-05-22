@@ -33,8 +33,8 @@ This runs the official GitHub Actions runner image as a long-lived Docker Compos
    docker compose logs -f github-runner
    ```
 
-After the first successful registration, the runner state is saved in the `runner-state`
-Docker volume.
+After the first successful registration, the runner state is saved in the local
+`runner-state/` directory.
 Normal container restarts do not need a new token.
 
 ## Use it in a workflow
