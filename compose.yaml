@@ -1,0 +1,20 @@
+services:
+  github-runner:
+    build: .
+    image: local/github-actions-runner:2.334.0
+    container_name: github-actions-runner
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      RUNNER_STATE_DIR: /runner-state
+      RUNNER_WORKDIR: _work
+    volumes:
+      - runner-state:/runner-state
+      - runner-work:/home/runner/_work
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  runner-state:
+  runner-work:
