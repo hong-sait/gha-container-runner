@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cicd-demo-deployer
+  namespace: self-hosted
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: cicd-demo-deployer
+  namespace: self-hosted
+rules:
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+    resourceNames:
+      - cicd-demo-deployment
+    verbs:
+      - get
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - services
+    resourceNames:
+      - cicd-demo-service
+    verbs:
+      - get
+      - patch
+      - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cicd-demo-deployer
+  namespace: self-hosted
+subjects:
+  - kind: ServiceAccount
+    name: cicd-demo-deployer
+    namespace: self-hosted
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: cicd-demo-deployer

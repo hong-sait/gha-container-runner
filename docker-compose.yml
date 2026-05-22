@@ -14,6 +14,8 @@ services:
       - ./runner-state:/runner-state
       - runner-work:/home/runner/_work
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./runner-kubeconfig:/home/runner/.kube/config:ro
+      - ./deploy/cicd-demo.yaml:/home/runner/deploy/cicd-demo.yaml:ro
 
 volumes:
   runner-work:
